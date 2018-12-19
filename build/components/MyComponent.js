@@ -15,12 +15,12 @@ import React from 'react';
 import { Text, View } from 'react-native';
 var MyComponent = /** @class */ (function (_super) {
     __extends(MyComponent, _super);
-    function MyComponent(props) {
-        return _super.call(this, props) || this;
+    function MyComponent() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     MyComponent.prototype.render = function () {
         return (<View>
-        <Text>{this.props.hello} {this.props.world}</Text>
+        <Text>{this.props.hello} {this.props.name}</Text>
       </View>);
     };
     return MyComponent;

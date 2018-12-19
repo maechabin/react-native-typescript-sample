@@ -1,3 +1,3 @@
 export var state = {
-    hello: 'Hello'
+    name: 'React Native'
 };

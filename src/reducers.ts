@@ -1,17 +1,32 @@
-import { state, Hello } from "./state";
-import { CHANGE_HELLO_TO_ABE } from "./actions";
+import { state, HelloState } from "./state";
+import { ActionType } from "./actions";
 
-export function reducer(state: Hello = { hello: "init" }, action: any) {
+const initialState = state;
+
+export function reducer(
+  state: HelloState = initialState,
+  action: { type: ActionType, payload?: any },
+) {
   switch (action.type) {
-    case CHANGE_HELLO_TO_ABE:
+    case ActionType.CHANGE_HELLO_TO_ABE:
       console.log("action ちゃんと通ってるぜ");
       return {
         ...state,
-        hello: action.payload
+        name: action.payload
       };
-      break;
+    case ActionType.CHANGE_HELLO_TO_KIM:
+      console.log("action ちゃんと通ってるぜ");
+      return {
+        ...state,
+        name: action.payload
+      };
+    case ActionType.CHANGE_HELLO_TO_MAEDA:
+      console.log("action ちゃんと通ってるぜ");
+      return {
+        ...state,
+        name: action.payload
+      };
     default:
       return state;
-      break;
   }
 }

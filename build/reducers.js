@@ -9,16 +9,22 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { CHANGE_HELLO_TO_ABE } from "./actions";
+import { state } from "./state";
+import { ActionType } from "./actions";
+var initialState = state;
 export function reducer(state, action) {
-    if (state === void 0) { state = { hello: "init" }; }
+    if (state === void 0) { state = initialState; }
     switch (action.type) {
-        case CHANGE_HELLO_TO_ABE:
+        case ActionType.CHANGE_HELLO_TO_ABE:
             console.log("action ちゃんと通ってるぜ");
-            return __assign({}, state, { hello: action.payload });
-            break;
+            return __assign({}, state, { name: action.payload });
+        case ActionType.CHANGE_HELLO_TO_KIM:
+            console.log("action ちゃんと通ってるぜ");
+            return __assign({}, state, { name: action.payload });
+        case ActionType.CHANGE_HELLO_TO_MAEDA:
+            console.log("action ちゃんと通ってるぜ");
+            return __assign({}, state, { name: action.payload });
         default:
             return state;
-            break;
     }
 }

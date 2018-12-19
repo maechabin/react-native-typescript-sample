@@ -12,55 +12,55 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import * as React from 'react';
-import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { StyleSheet, View, Button } from 'react-native';
 import MyComponent from 'components/MyComponent';
-import { state } from './state';
-import { reducer } from './reducers';
-import { abe } from 'actions';
-var store = createStore(reducer, state);
-var Root = function (props) {
+import { store } from './store';
+import { changeToAbe, changeToKim, changeToMaeda } from 'actions';
+var App = function () {
     return (<Provider store={store}>
       <Container />
     </Provider>);
 };
-var App = /** @class */ (function (_super) {
-    __extends(App, _super);
-    function App(props) {
+var Root = /** @class */ (function (_super) {
+    __extends(Root, _super);
+    function Root(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
             hello: 'Hello',
             world: 'World',
         };
         console.log(_this.props);
-        console.log("" + _this.props.handleClick, 'font-weight: bold');
         return _this;
     }
-    App.prototype.componentWillMount = function () {
-        console.log("" + this.props.handleClick, 'font-weight: bold');
-    };
-    App.prototype.render = function () {
+    Root.prototype.render = function () {
         var _this = this;
-        return (<View>
-        <MyComponent hello={this.props.hello} world={this.state.world}/>
-        <Button title="test button !!!!" onPress={function () { return _this.props.handleClick(); }}/>
+        return (<View style={styles.container}>
+        <MyComponent hello={this.state.hello} name={this.props.name}/>
+        <Button title="Change to Abe !!!!" onPress={function () { return _this.props.handleAbeClick(); }}/>
+        <Button title="Change to Kim !!!!" onPress={function () { return _this.props.handleKimClick(); }}/>
+        <Button title="Change to Maeda !!!!" onPress={function () { return _this.props.handleMaedaClick(); }}/>
       </View>);
     };
-    return App;
+    return Root;
 }(React.Component));
-export default App;
+export { Root };
 var mapStateToProps = function (state) { return ({
-    hello: state.hello,
+    name: state.name,
 }); };
 var mapDispatchToProps = function (dispatch) { return ({
-    handleClick: function () {
-        // Storeのdispatchメソッド（引数はAction Creator）
-        dispatch(abe());
+    handleAbeClick: function () {
+        dispatch(changeToAbe());
     },
+    handleKimClick: function () {
+        dispatch(changeToKim());
+    },
+    handleMaedaClick: function () {
+        dispatch(changeToMaeda());
+    }
 }); };
 var Container = connect(mapStateToProps, // to AppComponent's Prop
-mapDispatchToProps)(App);
+mapDispatchToProps)(Root);
 var styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -69,3 +69,4 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+export default App;
