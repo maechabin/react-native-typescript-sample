@@ -1,71 +1,31 @@
 import * as React from 'react';
-import { createStore, combineReducers } from 'redux';
+import { Dispatch } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import MyComponent from 'components/MyComponent';
-import { state } from './state';
-import { reducer } from './reducers';
-import { abe } from 'actions';
+import { HelloState } from './state';
+import { store } from './store';
+import { changeToAbe, changeToKim, changeToMaeda, Action } from 'actions';
 
-interface Props {
-  hello: string,
-  handleClick: () => void
+interface AppProps {
+  name: string;
+  handleAbeClick(): void;
+  handleKimClick(): void;
+  handleMaedaClick(): void;
 }
-interface State {
+
+interface AppState {
   hello: string;
   world: string;
 }
 
-const store = createStore(reducer, state);
-
-const Root = (props: Props) => {
+const App: React.SFC = () => {
   return (
     <Provider store={store}>
       <Container />
     </Provider>
   )
 }
-
-export default class App extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      hello: 'Hello',
-      world: 'World',
-    }
-
-    console.log(this.props);
-    console.log(`${this.props.handleClick}`, 'font-weight: bold');
-  }
-
-  componentWillMount() {
-    console.log(`${this.props.handleClick}`, 'font-weight: bold');
-
-  }
-
-  render() {
-    return (
-      <View>
-        <MyComponent hello={this.props.hello} world={this.state.world} />
-        <Button title="test button !!!!" onPress={() => this.props.handleClick()} />
-      </View>
-    );
-  }
-}
-const mapStateToProps = (state: any) => ({
-  hello: state.hello,
-});
-const mapDispatchToProps = (dispatch: any) => ({
-  handleClick() {
-    // Storeのdispatchメソッド（引数はAction Creator）
-    dispatch(abe());
-  },
-});
-const Container = connect(
-  mapStateToProps, // to AppComponent's Prop
-  mapDispatchToProps, //mapDispatchToProps
-)(App);
-
 
 const styles = StyleSheet.create({
   container: {
@@ -75,3 +35,49 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export  class Root extends React.Component<AppProps, AppState> {
+  constructor(props: AppProps) {
+    super(props);
+    this.state = {
+      hello: 'Hello',
+      world: 'World',
+    }
+
+    console.log(this.props);
+  }
+
+  render(): JSX.Element {
+    return (
+      <View style={styles.container}>
+        <MyComponent hello={this.state.hello} name={this.props.name} />
+        <Button title="Change to Abe !!!!" onPress={() => this.props.handleAbeClick()} />
+        <Button title="Change to Kim !!!!" onPress={() => this.props.handleKimClick()} />
+        <Button title="Change to Maeda !!!!" onPress={() => this.props.handleMaedaClick()} />
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = (state: HelloState) => ({
+  name: state.name,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  handleAbeClick(): void {
+    dispatch(changeToAbe());
+  },
+  handleKimClick(): void {
+    dispatch(changeToKim());
+  },
+  handleMaedaClick(): void {
+    dispatch(changeToMaeda());
+  }
+});
+
+const Container = connect(
+  mapStateToProps, // to AppComponent's Prop
+  mapDispatchToProps, //mapDispatchToProps
+)(Root);
+
+export default App;

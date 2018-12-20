@@ -1,7 +1,7 @@
-export interface Hello {
-  hello: string;
+export interface HelloState {
+  name: string;
 }
 
-export const state: Hello = {
-  hello: 'Hello'
+export const state: HelloState = {
+  name: 'React Native'
 }
