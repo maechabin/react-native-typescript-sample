@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { Dispatch } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import MyComponent from 'components/MyComponent';
 import { HelloState } from './state';
 import { store } from './store';
-import { changeToAbe, changeToKim, changeToMaeda } from 'actions';
+import { changeToAbe, changeToKim, changeToMaeda, Action } from 'actions';
 
 interface AppProps {
   name: string;
@@ -18,13 +19,22 @@ interface AppState {
   world: string;
 }
 
-const App = () => {
+const App: React.SFC = () => {
   return (
     <Provider store={store}>
       <Container />
     </Provider>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export  class Root extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
@@ -48,17 +58,19 @@ export  class Root extends React.Component<AppProps, AppState> {
     );
   }
 }
+
 const mapStateToProps = (state: HelloState) => ({
   name: state.name,
 });
-const mapDispatchToProps = (dispatch: any) => ({
-  handleAbeClick() {
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  handleAbeClick(): void {
     dispatch(changeToAbe());
   },
-  handleKimClick() {
+  handleKimClick(): void {
     dispatch(changeToKim());
   },
-  handleMaedaClick() {
+  handleMaedaClick(): void {
     dispatch(changeToMaeda());
   }
 });
@@ -67,15 +79,5 @@ const Container = connect(
   mapStateToProps, // to AppComponent's Prop
   mapDispatchToProps, //mapDispatchToProps
 )(Root);
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;

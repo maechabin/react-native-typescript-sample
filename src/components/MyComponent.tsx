@@ -6,12 +6,10 @@ interface MyComponentProps {
   name: string;
 }
 
-export default class MyComponent extends React.Component<MyComponentProps> {
-  render() {
-    return (
-      <View>
-        <Text>{this.props.hello} {this.props.name}</Text>
-      </View>
-    );
-  }
-}
+const MyComponent: React.SFC<MyComponentProps> = props => (
+  <View>
+    <Text>{props.hello} {props.name}</Text>
+  </View>
+);
+
+export default MyComponent;
